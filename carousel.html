@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>人物轮播</title>
+    <style>
+        #main{
+            margin: auto;
+            width: 100vw;
+            height: 400px;
+            background: url("img/bg22.jpg");
+            font-family: '微软雅黑';
+        }
+        ul{
+            margin: auto;
+            width: 1200px;
+            height: 400px;
+        }
+        ul li{
+            list-style: none;
+            float: left;
+            margin: 20px 60px 0 50px;
+            color: #FFFFFF;
+            text-align: center;
+            line-height: 40px;
+        }
+        img{
+            border-radius:50% ;
+        }
+        .on{
+            border: 2px solid orange;
+        }
+        .txt_on{
+            color: orange;
+        }
+        p{
+            width: 950px;
+            height: 30px;
+            margin: -90px auto;
+            text-align: center;
+            color: orange;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            /*获取到li标签*/
+        var li = document.getElementsByTagName("li");
+            /*获取到需填入内容的p标签*/
+        var p = document.getElementsByTagName("p")[0];
+            /*获取到人物图片*/
+        var img = document.getElementsByTagName("img");
+            /*获取到人物姓名简介*/
+        var span = document.getElementsByTagName("span");
+            /*给一个初始值，从第一个开始轮播*/
+        var start = 0;
+            /*定时器初始化*/
+        var timer = null;
+            /*当前下标*/
+        var current_idx;
+            /*用数组保存要填入p标签的内容*/
+        var str=[
+                 "在不断变化的市场环境中，神州融不断革新风控技术，并整合消费金融生态上下游的力量， 连接各类信贷场景与银行资金，是值得信赖的合作伙伴。",
+                 "神州融秉承“打造银行级消费金融解决方案”的理念，对自身的专业技术，系统架构、 流程规范、安全合规性都坚持了严苛的标准和要求， 相信大数据风控会助力消费金融行业更安全快速的发展。",
+                 "从“大数据风控专家”到提供“消费金融解决方案领导者”，神州融一直走在科技金融行业前列， 为客户的业务发展保驾护航，在激烈的市场竞争中获得稳健的发展。",
+                 "神州融对消费金融行业的深刻理解和强大的技术实力，能够针对客户的独特需求设计定制化、 开创性的解决方案。先进的业务理念和扎实的技术手段，可以降低非金融从业机构进入消费金融领域的门槛。",
+                 "在我们所接触的大数据风控供应商中，神州融的服务最全面也最专业的，从征信数据、IT系统、评分建模到资金对接， 使客户无论处在业务发展的哪个阶段，都能获得专业的服务与支持。"
+                 ];
+            /*设置定时器开始轮播*/
+            timer=setInterval(function(){
+                /*下标从0递增实现轮播*/
+                var idx = start++ % (li.length);
+                /*先清空人物图片和简介的样式*/
+                for(var i=0;i<li.length;i++){
+                    img[i].setAttribute("class", "");
+                    span[i].setAttribute("class", "")
+                }
+                /*改变当前人物的图片和简介样式并填入相应内容*/
+                img[idx].setAttribute("class", "on");
+                span[idx].setAttribute("class", "txt_on");
+                p.innerHTML=str[idx];
+            },1700);
+        for (var i = 0; i < li.length; i++) {
+            (function (n) {
+                /*给每一个li绑定鼠标悬浮事件*/
+                li[n].addEventListener("mouseover", function () {
+                    clearInterval(timer);
+                    /*鼠标悬浮到指定人物时p标签填入相应内容*/
+                    if(n===0){
+                        p.innerHTML=str[0];
+                    }
+                    else if(n===1){
+                        p.innerHTML=str[1];
+                    }
+                    else if(n===2){
+                        p.innerHTML=str[2];
+                    }
+                    else if(n===3){
+                        p.innerHTML=str[3];
+                    }
+                    else{
+                        p.innerHTML=str[4];
+                    }
+                    /*获取到当前的idx值并用变量储存*/
+                    current_idx=n;
+                    /*清空所有Li中的样式*/
+                    for (var j = 0; j < li.length; j++) {
+                        img[j].setAttribute("class", "");
+                        span[j].setAttribute("class", "")
+                    }
+                    /*给指定的li中的人物图片和简介改样式*/
+                    img[n].setAttribute("class", "on");
+                    span[n].setAttribute("class", "txt_on");
+                });
+                    /*绑定鼠标移出li时的事件*/
+                li[n].addEventListener("mouseout", function () {
+                    timer=setInterval(function(){
+                        /*从当前的li开始轮播*/
+                        var idx = current_idx++ % (li.length);
+                        for(var i=0;i<li.length;i++){
+                            img[i].setAttribute("class", "");
+                            span[i].setAttribute("class", "")
+                        }
+                        img[idx].setAttribute("class", "on");
+                        span[idx].setAttribute("class", "txt_on");
+                        p.innerHTML=str[idx];
+                    },1700);
+                });
+
+            })(i)
+        }
+    }
+    </script>
+</head>
+<body>
+<div id="main">
+    <ul>
+        <li>
+            <img class="on" src="img/jiaoke.png"><br>
+            <span class="txt_on">
+                用钱宝<br>
+                CEO<br>
+                焦可<br>
+            </span>
+        </li>
+        <li>
+            <img src="img/du.png"><br>
+            <span>
+            中银消费<br>
+            CRO<br>
+            杜全<br>
+            </span>
+        </li>
+        <li>
+            <img src="img/hudan.png"><br>
+            <span>
+            买单侠<br>
+            CRO<br>
+            胡丹<br>
+            </span>
+        </li>
+        <li>
+            <img src="img/yi.png"><br>
+            <span>
+            益博瑞<br>
+            大中华区CEO<br>
+            姚成章<br>
+            </span>
+        </li>
+        <li>
+            <img src="img/yang.png"><br>
+            <span>
+            翼勋金融<br>
+            副总裁<br>
+            杨佳伟<br>
+            </span>
+        </li>
+    </ul>
+    <p>在不断变化的市场环境中，神州融不断革新风控技术，并整合消费金融生态上下游的力量， 连接各类信贷场景与银行资金，是值得信赖的合作伙伴。 </p>
+</div>
+</body>
+</html>

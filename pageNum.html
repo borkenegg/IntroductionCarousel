@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>页码</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #list{
+            margin: auto;
+            width: 558px;
+            height: 60px;
+            overflow: hidden;
+        }
+        ul{
+            width: 2000px;
+            height: 40px;
+            position: relative;
+        }
+        li{
+            list-style: none;
+            float: left;
+            width: 60px;
+            height: 50px;
+            border: 1px solid deepskyblue;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        li:hover{
+            color: white;
+            background-color:cornflowerblue ;
+        }
+        #turnPageList{
+            width: 680px;
+            height: 60px;
+            position: relative;
+            left: 620px;
+            top: 60px;
+        }
+        .page{
+            border: 1px solid cadetblue;
+            width: 60px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+        #prevpage{
+            float: left;
+            display: none;
+        }
+        #nextpage{
+            float: right;
+        }
+    </style>
+    <script>
+        window.onload=function() {
+            var li = document.getElementsByTagName("li");
+            var ul = document.getElementsByTagName("ul")[0];
+            var prev = document.getElementById("prevpage");
+            var next = document.getElementById("nextpage");
+            var left_val=parseInt(ul.style.left);
+            var current_idx=0;
+            li[0].style.backgroundColor="deepskyblue";
+            for (var i = 0; i < li.length; i++) {
+                (function (n) {
+                    li[n].addEventListener("click", function () {
+                        for(var i = 0;i<li.length;i++){
+                            li[i].style.backgroundColor="";
+                        }
+                        if(n>=1){
+                            prev.style.display="block";
+                        } else{
+                            prev.style.display="";
+                        }
+                        if(n===19){
+                            next.style.display="none";
+                        }else{
+                            next.style.display="block"
+                        }
+                        if(n>4){
+                            left_val=(-62)*(n-4);
+                        }
+                        else if(left_val<0&&n<=4){
+                            left_val = 62*Math.abs(n-4);
+                            if(left_val>=0){
+                                left_val=0;
+                            }
+                        }
+                        ul.style.left=left_val+"px";
+                        current_idx=n;
+                        li[n].style.backgroundColor="deepskyblue";
+                    });
+                })(i);
+            }
+
+            prev.addEventListener("click",function(){
+                    next.style.display="block";
+                    if(left_val<0){
+                        left_val+=62;
+                    }
+                    ul.style.left=left_val+"px";
+                    current_idx--;
+                    if(current_idx<=0){
+                        prev.style.display="none"
+                    }
+                    for(var i = 0;i<li.length;i++){
+                        li[i].style.backgroundColor="";
+                    }
+                    li[current_idx].style.backgroundColor="deepskyblue";
+            });
+            next.addEventListener("click",function(){
+                    prev.style.display="block";
+                    if(current_idx>=4){
+                        left_val-=62;
+                    }
+                    ul.style.left=left_val+"px";
+                    current_idx++;
+                    if(current_idx>=19){
+                        next.style.display="none"
+                    }
+                    for(var i = 0;i<li.length;i++){
+                        li[i].style.backgroundColor="";
+                    }
+                    li[current_idx].style.backgroundColor="deepskyblue";
+            })
+
+        }
+
+    </script>
+
+</head>
+<body>
+<div id="turnPageList">
+    <div class="page" id="prevpage" >上一页</div>
+    <div class="page" id="nextpage">下一页</div>
+</div>
+
+<div id="list">
+<ul style="left: 0;">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+    <li>11</li>
+    <li>12</li>
+    <li>13</li>
+    <li>14</li>
+    <li>15</li>
+    <li>16</li>
+    <li>17</li>
+    <li>18</li>
+    <li>19</li>
+    <li>20</li>
+</ul>
+</div>
+
+</body>
+</html>

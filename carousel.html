@@ -85,20 +85,10 @@
                 li[n].addEventListener("mouseover", function () {
                     clearInterval(timer);
                     /*鼠标悬浮到指定人物时p标签填入相应内容*/
-                    if(n===0){
-                        p.innerHTML=str[0];
-                    }
-                    else if(n===1){
-                        p.innerHTML=str[1];
-                    }
-                    else if(n===2){
-                        p.innerHTML=str[2];
-                    }
-                    else if(n===3){
-                        p.innerHTML=str[3];
-                    }
-                    else{
-                        p.innerHTML=str[4];
+                    for(var k=0;k<li.length;k++){
+                        if(n===k){
+                            p.innerHTML=str[k]
+                        }
                     }
                     /*获取到当前的idx值并用变量储存*/
                     current_idx=n;
